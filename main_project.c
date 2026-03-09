@@ -1,6 +1,8 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#include "virtual_pet.h"
+
 #define WIDTH 400
 #define HEIGHT 400
 
@@ -64,6 +66,7 @@ int main(int argc, char* argv[])
 
 		
 		//Game Logic
+		Pet_Update();
 	}
 
 	SDL_Quit();
