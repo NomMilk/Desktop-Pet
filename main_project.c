@@ -50,6 +50,7 @@ int main(int argc, char* argv[])
 	//DesktopPet
 	bool isRunning = true;
 	SDL_Event event;
+	Pet_Start(renderer);
 
 	while(isRunning)
 	{
@@ -62,11 +63,11 @@ int main(int argc, char* argv[])
 		}
 
 		SDL_RenderClear(renderer);
-		SDL_RenderPresent(renderer);
 
-		
 		//Game Logic
-		Pet_Update();
+		Pet_Update(renderer);
+
+		SDL_RenderPresent(renderer);
 	}
 
 	SDL_Quit();
