@@ -8,6 +8,10 @@ SDL_Texture* pet_texture = NULL;
 
 SDL_Rect dst;
 
+int PET_SIZE = 200;
+int newTarget = 40;
+float currentTime = 0;
+
 void Pet_Start(SDL_Renderer* _renderer)
 {
 	pet_texture_surface = SDL_LoadBMP("cone.bmp");
@@ -22,11 +26,22 @@ void Pet_Start(SDL_Renderer* _renderer)
 
 void Pet_Update(SDL_Renderer* _renderer)
 {
+	
+	if(currentTime < newTarget)
+	{
+		newTarget = 40;
+		currentTime += 0.001f;
+	}
+	else
+	{
+		newTarget = 0;
+		currentTime -= 0.001f;
+	}
 
-	dst.x = 100;
-	dst.y = 100;
-	dst.w = 100;
-	dst.h = 100;
+	dst.x = PET_SIZE;
+	dst.y = PET_SIZE + currentTime;
+	dst.w = PET_SIZE;
+	dst.h = PET_SIZE - currentTime;
 
 	SDL_RenderCopy(_renderer, pet_texture, NULL, &dst);
 }
