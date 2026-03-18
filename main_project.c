@@ -1,10 +1,14 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <time.h>
 
 #include "virtual_pet.h"
+#include "text_bubble.h"
 
 #define WIDTH 400
 #define HEIGHT 400
+
+#define CLOCKS_PER_SECONDS 50000
 
 int main(int argc, char* argv[])
 {
@@ -47,13 +51,23 @@ int main(int argc, char* argv[])
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
 	//DesktopPet
 	bool isRunning = true;
 	SDL_Event event;
 	Pet_Start(renderer);
+	Text_Start(renderer);
+
+	double deltaTime = 0;
+	clock_t currentTime = clock();
+	clock_t previousTime = clock();
 
 	while(isRunning)
 	{
+		currentTime = clock();
+		deltaTime = (double)(currentTime - previousTime)/CLOCKS_PER_SECONDS;
+		previousTime = currentTime;
+
 		while(SDL_PollEvent(&event))
 		{
 			if(event.type == SDL_QUIT)
@@ -65,7 +79,8 @@ int main(int argc, char* argv[])
 		SDL_RenderClear(renderer);
 
 		//Game Logic
-		Pet_Update(renderer);
+		Pet_Update(renderer, deltaTime);
+		Text_Update(renderer, deltaTime);
 
 		SDL_RenderPresent(renderer);
 	}

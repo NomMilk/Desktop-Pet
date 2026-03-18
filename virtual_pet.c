@@ -24,18 +24,18 @@ void Pet_Start(SDL_Renderer* _renderer)
 	SDL_FreeSurface(pet_texture_surface);
 }
 
-void Pet_Update(SDL_Renderer* _renderer)
+void Pet_Update(SDL_Renderer* _renderer, float _deltaTime)
 {
 	
 	if(currentTime < newTarget)
 	{
 		newTarget = 40;
-		currentTime += 0.001f;
+		currentTime += 2 * _deltaTime;
 	}
 	else
 	{
 		newTarget = 0;
-		currentTime -= 0.001f;
+		currentTime -= 2 * _deltaTime;
 	}
 
 	dst.x = PET_SIZE;
