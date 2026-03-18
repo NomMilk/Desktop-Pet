@@ -1,6 +1,6 @@
 SRC = $(wildcard *.c)
 
-TARGET = game
+TARGET = pet
 
 $(TARGET): $(SRC)
-	g++ $(SRC) -o $(TARGET) -lSDL2
+	g++ $(SRC) -o $(TARGET) -lSDL2 -lSDL2_ttf
