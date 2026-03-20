@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include <iostream>
 #include <time.h>
 
 #include "virtual_pet.h"
@@ -21,7 +20,6 @@ int main(int argc, char* argv[])
 	
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		std::cout << "Error initalizing SDL: " << SDL_GetError() << '\n';
 		return 1;
 	}
 	
@@ -38,14 +36,12 @@ int main(int argc, char* argv[])
 
 	if(!window)
 	{
-		std::cout << "Error Creating Window: " << SDL_GetError() << '\n';
 		return 1;
 	}
 	
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	if(!renderer)
 	{
-		std::cout << "Error Getting Renderer: " << SDL_GetError() << '\n';
 		return 1;
 	}
 
@@ -56,7 +52,7 @@ int main(int argc, char* argv[])
 	bool isRunning = true;
 	SDL_Event event;
 	Pet_Start(renderer);
-	Text_Start(renderer);
+	Text_Start();
 
 	double deltaTime = 0;
 	clock_t currentTime = clock();
@@ -80,7 +76,7 @@ int main(int argc, char* argv[])
 
 		//Game Logic
 		Pet_Update(renderer, deltaTime);
-		Text_Update(renderer, deltaTime);
+		Text_Update(renderer);
 
 		SDL_RenderPresent(renderer);
 	}

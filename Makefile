@@ -1,6 +1,5 @@
-SRC = $(wildcard *.c)
-
 TARGET = pet
 
-$(TARGET): $(SRC)
-	g++ $(SRC) -o $(TARGET) -lSDL2 -lSDL2_ttf
+$(TARGET):
+	gcc -fsanitize=address -g -Wall -Wextra *.c -o pet -lSDL2 -lSDL2_ttf
+

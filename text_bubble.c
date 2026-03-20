@@ -1,4 +1,3 @@
-#include <iostream>
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -14,7 +13,7 @@ SDL_Color text_color = {0, 0, 0, 0};
 
 SDL_Rect bubble;
 
-char input_text[] = "Hello fishe!";
+char input_text[] = "Hello fishe! i'm talkin n shi";
 int bubble_width = 300;
 int bubble_height = 180;
 int font_size = 20;
@@ -23,7 +22,7 @@ int border = 5;
 int padding = 20;
 int text_padding = 20;
 
-void Text_Start(SDL_Renderer* _renderer)
+void Text_Start()
 {
 	if (TTF_Init() == -1)
 	{
@@ -38,7 +37,7 @@ void Text_Start(SDL_Renderer* _renderer)
 	}
 }
 
-void Text_Update(SDL_Renderer* _renderer, float _deltaTime)
+void Text_Update(SDL_Renderer* _renderer)
 {
 	SDL_SetRenderDrawColor(_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	bubble.x = bubble.y = padding;
@@ -58,13 +57,13 @@ void Text_Update(SDL_Renderer* _renderer, float _deltaTime)
 	text_texture = SDL_CreateTextureFromSurface(_renderer, text_texture_surface);
 	SDL_FreeSurface(text_texture_surface);
 
-	bubble.x = bubble.y = padding + border + text_padding;
+	bubble.x = padding + border + text_padding;
+	bubble.y = bubble.h * 0.5f;
 	bubble.w = (bubble_width - (border * 2)) * 0.9f;
-	bubble.h = (bubble_height - (border * 2))/2;
+	bubble.h = (bubble_height - (border * 2)) * 0.2f;
 
 	SDL_RenderCopy(_renderer, text_texture, NULL, &bubble);
 
 	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-	
 }
 
