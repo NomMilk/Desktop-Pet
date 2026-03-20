@@ -13,17 +13,43 @@ SDL_Color text_color = {0, 0, 0, 0};
 
 SDL_Rect bubble;
 
-char input_text[] = "Hello fishe! i'm talkin n shi";
-int bubble_width = 300;
-int bubble_height = 180;
-int font_size = 20;
+char* nouns = "{nouns}";
+char* intensifiers = "{intensifiers}";
+char* adjectives = "{adjectives}";
+
+int bubble_width = 350;
+int bubble_height = 130;
+int font_size = 60;
 
 int border = 5;
 int padding = 20;
 int text_padding = 20;
 
+void generate_random_sentence()
+{
+    FILE* nouns_file = fopen("wordlist/nouns", "r");
+    if (nouns_file == NULL) {
+        perror("Failed to open file");
+    }
+    fclose(nouns_file);
+
+    FILE* intensifiers_file = fopen("wordlist/intensifiers", "r");
+    if (intensifiers_file == NULL) {
+        perror("Failed to open file");
+    }
+    fclose(intensifiers_file);
+
+
+    FILE* adjectives_file = fopen("wordlist/adjectives", "r");
+    if (adjectives_file == NULL) {
+        perror("Failed to open file");
+    }
+    fclose(adjectives_file);
+}
+
 void Text_Start()
 {
+	generate_random_sentence();
 	if (TTF_Init() == -1)
 	{
 		printf("TTF_Init failed: %s\n", TTF_GetError());
@@ -53,7 +79,12 @@ void Text_Update(SDL_Renderer* _renderer)
 	SDL_RenderFillRect(_renderer, &bubble);
 
 	SDL_SetRenderDrawColor(_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-	text_texture_surface = TTF_RenderText_Solid(font, input_text, text_color);
+
+	//build sentence	
+	char sentence[100];
+	snprintf(sentence, sizeof(sentence), "%ss are %s %s!", nouns, intensifiers, adjectives);
+
+	text_texture_surface = TTF_RenderText_Solid(font, sentence, text_color);
 	text_texture = SDL_CreateTextureFromSurface(_renderer, text_texture_surface);
 	SDL_FreeSurface(text_texture_surface);
 
