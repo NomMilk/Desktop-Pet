@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
@@ -12,10 +13,17 @@ TTF_Font* font = NULL;
 SDL_Color text_color = {0, 0, 0, 0};
 
 SDL_Rect bubble;
+#define MAX_TEXT_LENGTH 1000
+#define MAX_WORD_LENGTH 100
 
 char* nouns = "{nouns}";
+char nounContent[MAX_TEXT_LENGTH];
+
 char* intensifiers = "{intensifiers}";
+char intenseContent[MAX_TEXT_LENGTH];
+
 char* adjectives = "{adjectives}";
+char adjContent[MAX_TEXT_LENGTH];
 
 int bubble_width = 350;
 int bubble_height = 130;
@@ -27,24 +35,45 @@ int text_padding = 20;
 
 void generate_random_sentence()
 {
-    FILE* nouns_file = fopen("wordlist/nouns", "r");
-    if (nouns_file == NULL) {
-        perror("Failed to open file");
-    }
-    fclose(nouns_file);
+	srand(time(NULL));
+	FILE* nouns_file = fopen("wordlist/nouns", "r");
+	if (nouns_file == NULL) {
+		printf("Can't Load Nouns");
+	}
 
-    FILE* intensifiers_file = fopen("wordlist/intensifiers", "r");
-    if (intensifiers_file == NULL) {
-        perror("Failed to open file");
-    }
-    fclose(intensifiers_file);
+	fgets(nounContent, MAX_TEXT_LENGTH, nouns_file);
+	
+	int currentRandom = rand() % MAX_WORD_LENGTH;
+	int currentSpacesCounter = 0;
+	
+	for(int I = 0; I < MAX_TEXT_LENGTH; I++)
+	{
+		if(currentSpacesCounter >= currentRandom)
+		{
+		}	
+		else
+		{
+			if(nounContent[I] == ' ')
+			{
+				currentSpacesCounter++;		
+			}
+		}
+	}
+
+	fclose(nouns_file);
+
+	FILE* intensifiers_file = fopen("wordlist/intensifiers", "r");
+	if (intensifiers_file == NULL) {
+		printf("Can't Load Intense");
+	}
+	fclose(intensifiers_file);
 
 
-    FILE* adjectives_file = fopen("wordlist/adjectives", "r");
-    if (adjectives_file == NULL) {
-        perror("Failed to open file");
-    }
-    fclose(adjectives_file);
+	FILE* adjectives_file = fopen("wordlist/adjectives", "r");
+	if (adjectives_file == NULL) {
+		printf("Can't Load Adje");
+	}
+	fclose(adjectives_file);
 }
 
 void Text_Start()
