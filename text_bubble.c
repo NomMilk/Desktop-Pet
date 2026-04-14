@@ -35,45 +35,122 @@ int text_padding = 20;
 
 void generate_random_sentence()
 {
-	srand(time(NULL));
-	FILE* nouns_file = fopen("wordlist/nouns", "r");
-	if (nouns_file == NULL) {
-		printf("Can't Load Nouns");
-	}
-
-	fgets(nounContent, MAX_TEXT_LENGTH, nouns_file);
-	
-	int currentRandom = rand() % MAX_WORD_LENGTH;
-	int currentSpacesCounter = 0;
-	
-	for(int I = 0; I < MAX_TEXT_LENGTH; I++)
 	{
-		if(currentSpacesCounter >= currentRandom)
-		{
-		}	
-		else
-		{
-			if(nounContent[I] == ' ')
-			{
-				currentSpacesCounter++;		
-			}
+		FILE* nouns_file = fopen("wordlist/nouns", "r");
+		if (nouns_file == NULL) {
+			printf("Can't Load Nouns");
 		}
+
+		fgets(nounContent, MAX_TEXT_LENGTH, nouns_file);
+
+		fclose(nouns_file);
+
+		srand(time(NULL));
+
+		int randomIndex = 0;
+		randomIndex = rand() % MAX_WORD_LENGTH - 1;
+		nouns = &nounContent[randomIndex];
+
+		int start = 0;
+		int end = 0;
+		while(randomIndex > 0)
+		{
+			if(nounContent[start] == ' ') 
+			{
+				randomIndex--;
+			}
+			start++;
+		}
+
+		end = start;
+
+		while(nounContent[end] != ' ')
+		{
+			end++;
+		}
+
+		strncpy(nouns, &nounContent[start], end - start);
+		nouns[end - start] = '\0';
 	}
 
-	fclose(nouns_file);
+	{
+		FILE* intensifiers_file = fopen("wordlist/intensifiers", "r");
+		if (intensifiers_file == NULL) {
+			printf("Can't Load Intense");
+		}
+		
+		fgets(intenseContent, MAX_TEXT_LENGTH, intensifiers_file);
 
-	FILE* intensifiers_file = fopen("wordlist/intensifiers", "r");
-	if (intensifiers_file == NULL) {
-		printf("Can't Load Intense");
+		fclose(intensifiers_file);
+
+		srand(time(NULL));
+
+		int randomIndex = 0;
+		randomIndex = rand() % MAX_WORD_LENGTH - 1;
+		intensifiers = &intenseContent[randomIndex];
+
+		int start = 0;
+		int end = 0;
+		while(randomIndex > 0)
+		{
+			if(intenseContent[start] == ' ') 
+			{
+				randomIndex--;
+			}
+			start++;
+		}
+
+		end = start;
+
+		while(intenseContent[end] != ' ')
+		{
+			end++;
+		}
+
+		strncpy(intensifiers, &intenseContent[start], end - start);
+		intensifiers[end - start] = '\0';
 	}
-	fclose(intensifiers_file);
 
 
-	FILE* adjectives_file = fopen("wordlist/adjectives", "r");
-	if (adjectives_file == NULL) {
-		printf("Can't Load Adje");
+
+	{
+		FILE* adjectives_file = fopen("wordlist/adjectives", "r");
+		if (adjectives_file == NULL) {
+			printf("Can't Load Adje");
+		}
+
+		fgets(adjContent, MAX_TEXT_LENGTH, adjectives_file);
+
+		fclose(adjectives_file);
+
+		srand(time(NULL));
+
+		int randomIndex = 0;
+		randomIndex = rand() % MAX_WORD_LENGTH - 1;
+		adjectives = &adjContent[randomIndex];
+
+		int start = 0;
+		int end = 0;
+		while(randomIndex > 0)
+		{
+			if(adjContent[start] == ' ') 
+			{
+				randomIndex--;
+			}
+			start++;
+		}
+
+		end = start;
+
+		while(adjContent[end] != ' ')
+		{
+			end++;
+		}
+
+		strncpy(adjectives, &adjContent[start], end - start);
+		adjectives[end - start] = '\0';
+
 	}
-	fclose(adjectives_file);
 }
 
 void Text_Start()
