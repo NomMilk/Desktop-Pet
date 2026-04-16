@@ -18,12 +18,15 @@ SDL_Rect bubble;
 
 char* nouns = "{nouns}";
 char nounContent[MAX_TEXT_LENGTH];
+unsigned short nouns_size= 0;
 
 char* intensifiers = "{intensifiers}";
 char intenseContent[MAX_TEXT_LENGTH];
+unsigned short intensifiers_size= 0;
 
 char* adjectives = "{adjectives}";
 char adjContent[MAX_TEXT_LENGTH];
+unsigned short adjectives_size= 0;
 
 int bubble_width = 350;
 int bubble_height = 130;
@@ -42,6 +45,7 @@ void generate_random_sentence()
 		}
 
 		fgets(nounContent, MAX_TEXT_LENGTH, nouns_file);
+    	nouns_size = ftell(nouns_file);
 
 		fclose(nouns_file);
 
@@ -53,7 +57,7 @@ void generate_random_sentence()
 
 		int start = 0;
 		int end = 0;
-		while(randomIndex > 0)
+		while(randomIndex > 0 && start < nouns_size)
 		{
 			if(nounContent[start] == ' ') 
 			{
@@ -64,7 +68,7 @@ void generate_random_sentence()
 
 		end = start;
 
-		while(nounContent[end] != ' ')
+		while(nounContent[end] != ' ' && end < nouns_size)
 		{
 			end++;
 		}
@@ -80,6 +84,7 @@ void generate_random_sentence()
 		}
 		
 		fgets(intenseContent, MAX_TEXT_LENGTH, intensifiers_file);
+		intensifiers_size = ftell(intensifiers_file);
 
 		fclose(intensifiers_file);
 
@@ -91,7 +96,7 @@ void generate_random_sentence()
 
 		int start = 0;
 		int end = 0;
-		while(randomIndex > 0)
+		while(randomIndex > 0 && start < intensifiers_size)
 		{
 			if(intenseContent[start] == ' ') 
 			{
@@ -102,7 +107,7 @@ void generate_random_sentence()
 
 		end = start;
 
-		while(intenseContent[end] != ' ')
+		while(intenseContent[end] != ' ' && end < intensifiers_size)
 		{
 			end++;
 		}
@@ -120,6 +125,7 @@ void generate_random_sentence()
 		}
 
 		fgets(adjContent, MAX_TEXT_LENGTH, adjectives_file);
+		adjectives_size = ftell(adjectives_file);
 
 		fclose(adjectives_file);
 
@@ -131,7 +137,7 @@ void generate_random_sentence()
 
 		int start = 0;
 		int end = 0;
-		while(randomIndex > 0)
+		while(randomIndex > 0 && start < adjectives_size)
 		{
 			if(adjContent[start] == ' ') 
 			{
@@ -142,7 +148,7 @@ void generate_random_sentence()
 
 		end = start;
 
-		while(adjContent[end] != ' ')
+		while(adjContent[end] != ' ' && end < adjectives_size)
 		{
 			end++;
 		}
@@ -203,4 +209,3 @@ void Text_Update(SDL_Renderer* _renderer)
 
 	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 }
-
