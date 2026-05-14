@@ -63,6 +63,8 @@ int main(int argc, char* argv[])
 		currentTime = clock();
 		deltaTime = (double)(currentTime - previousTime)/CLOCKS_PER_SECONDS;
 		previousTime = currentTime;
+		//prevent pc from dying
+		SDL_Delay(1.0f);
 
 		while(SDL_PollEvent(&event))
 		{
