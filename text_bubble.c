@@ -159,6 +159,7 @@ void generate_random_sentence()
 	}
 }
 
+char sentence[100];
 void Text_Start()
 {
 	generate_random_sentence();
@@ -173,6 +174,9 @@ void Text_Start()
 	{
 		printf("Failed to load font: %s\n", TTF_GetError());
 	}
+
+	//build sentence	
+	snprintf(sentence, sizeof(sentence), "%ss are %s %s!", nouns, intensifiers, adjectives);
 }
 
 void Text_Update(SDL_Renderer* _renderer)
@@ -192,10 +196,6 @@ void Text_Update(SDL_Renderer* _renderer)
 
 	SDL_SetRenderDrawColor(_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 
-	//build sentence	
-	char sentence[100];
-	snprintf(sentence, sizeof(sentence), "%ss are %s %s!", nouns, intensifiers, adjectives);
-
 	text_texture_surface = TTF_RenderText_Solid(font, sentence, text_color);
 	text_texture = SDL_CreateTextureFromSurface(_renderer, text_texture_surface);
 	SDL_FreeSurface(text_texture_surface);
@@ -208,4 +208,5 @@ void Text_Update(SDL_Renderer* _renderer)
 	SDL_RenderCopy(_renderer, text_texture, NULL, &bubble);
 
 	SDL_SetRenderDrawColor(_renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+	SDL_DestroyTexture(text_texture);
 }
